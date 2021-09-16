@@ -1,7 +1,5 @@
 package com.epam.rd.service;
 
-// TODO : updateUser should update user
-// TODO : updateUser should throw exception if user not exist
 // TODO : deleteUser should delete user
 // TODO : deleteUser should throw exception if user not exist
 
@@ -74,6 +72,13 @@ public class UserServiceImplTest {
         User user = new User("","","");
         when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(null));
         Assertions.assertThrows(UserNotFoundException.class ,()->userService.updateUser(user.getUserName() ,user));
+    }
+    @Test
+    @DisplayName("updateUser should update user")
+    public void updateUserShouldUpdateUserIfExist(){
+        User user = new User("","","");
+        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(user));
+        Assertions.assertDoesNotThrow(()->userService.updateUser(user.getUserName() ,user));
     }
 
 }

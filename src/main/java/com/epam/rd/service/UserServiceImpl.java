@@ -40,5 +40,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(String userName, User user) throws UserNotFoundException {
         User user1 = getUserByUserName(userName);
+        user1.setName(user.getName());
+        user1.setPassword(user.getPassword());
+        userDao.save(user1);
     }
 }
