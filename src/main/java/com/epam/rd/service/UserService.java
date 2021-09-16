@@ -9,4 +9,6 @@ public interface UserService {
      List<User> getAllUsers();
 
      User getUserByUserName(String userName) throws UserNotFoundException;
+
+     void saveUser(User user);
 }

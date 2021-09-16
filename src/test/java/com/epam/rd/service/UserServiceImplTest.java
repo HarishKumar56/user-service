@@ -1,7 +1,5 @@
 package com.epam.rd.service;
 
-// TODO :
-// TODO : saveUser should save user
 // TODO : saveUser should throw exception if user already exist
 // TODO : updateUser should update user
 // TODO : updateUser should throw exception if user not exist
@@ -19,12 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.util.List;
-import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -57,4 +51,12 @@ public class UserServiceImplTest {
         when(userDao.findById(anyString())).thenReturn(java.util.Optional.ofNullable(null));
         Assertions.assertThrows(UserNotFoundException.class , ()->userService.getUserByUserName(""));
     }
+
+    @Test
+    @DisplayName("saveUser should save user")
+    public void saveUserShouldSaveUser() throws UserNotFoundException {
+        User user = new User("","","");
+        Assertions.assertDoesNotThrow(()->userService.saveUser(user));
+    }
+
 }
