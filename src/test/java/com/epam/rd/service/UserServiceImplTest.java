@@ -1,9 +1,5 @@
 package com.epam.rd.service;
 
-// TODO : deleteUser should delete user
-// TODO : deleteUser should throw exception if user not exist
-
-
 import com.epam.rd.entity.User;
 import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
@@ -54,7 +50,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("saveUser should save user")
-    public void saveUserShouldSaveUser() throws UserNotFoundException {
+    public void saveUserShouldSaveUser(){
         User user = new User("","","");
         Assertions.assertDoesNotThrow(()->userService.saveUser(user));
     }
@@ -87,6 +83,14 @@ public class UserServiceImplTest {
         User user = new User("","","");
         when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(null));
         Assertions.assertThrows(UserNotFoundException.class ,()->userService.deleteUser(user.getUserName()));
+    }
+
+    @Test
+    @DisplayName("deleteUser should delete user")
+    public void deleteUserShouldDeleteUserIfExist(){
+        User user = new User("","","");
+        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(user));
+        Assertions.assertDoesNotThrow(()->userService.deleteUser(user.getUserName()));
     }
 
 }

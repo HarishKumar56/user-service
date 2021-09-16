@@ -48,6 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userName) throws UserNotFoundException {
         User user = getUserByUserName(userName);
-
+        userDao.delete(user);
     }
 }
