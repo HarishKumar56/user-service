@@ -1,6 +1,7 @@
 package com.epam.rd.service;
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface UserService {
 
      User getUserByUserName(String userName) throws UserNotFoundException;
 
-     void saveUser(User user);
+     void saveUser(User user) throws DuplicateUserException;
 }

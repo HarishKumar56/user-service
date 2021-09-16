@@ -8,6 +8,7 @@ package com.epam.rd.service;
 
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.repository.UserDao;
 import org.junit.Test;
@@ -57,6 +58,13 @@ public class UserServiceImplTest {
     public void saveUserShouldSaveUser() throws UserNotFoundException {
         User user = new User("","","");
         Assertions.assertDoesNotThrow(()->userService.saveUser(user));
+    }
+    @Test
+    @DisplayName("saveUser should throw exception if user already exist")
+    public void saveUserShouldThrowExceptionIfUserAlreadyExist(){
+        User user = new User("","","");
+        when(userDao.existsById(anyString())).thenReturn(true);
+        Assertions.assertThrows(DuplicateUserException.class ,()->userService.saveUser(user));
     }
 
 }

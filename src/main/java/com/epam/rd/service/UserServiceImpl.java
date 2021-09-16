@@ -1,6 +1,7 @@
 package com.epam.rd.service;
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user) throws DuplicateUserException {
+        if(userDao.existsById(user.getUserName())){
+            throw new DuplicateUserException("User Already Exist");
+        }
         userDao.save(user);
     }
 }
