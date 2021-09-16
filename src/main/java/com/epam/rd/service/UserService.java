@@ -12,4 +12,6 @@ public interface UserService {
      User getUserByUserName(String userName) throws UserNotFoundException;
 
      void saveUser(User user) throws DuplicateUserException;
+
+     void updateUser(String userName, User user) throws UserNotFoundException;
 }

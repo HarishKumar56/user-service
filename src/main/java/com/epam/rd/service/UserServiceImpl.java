@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         }
         userDao.save(user);
     }
+
+    @Override
+    public void updateUser(String userName, User user) throws UserNotFoundException {
+        User user1 = getUserByUserName(userName);
+    }
 }
