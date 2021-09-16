@@ -1,11 +1,12 @@
 package com.epam.rd.service;
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.UserNotFoundException;
 
 import java.util.List;
 
 public interface UserService {
      List<User> getAllUsers();
 
-     User getUser(String userName);
+     User getUserByUserName(String userName) throws UserNotFoundException;
 }

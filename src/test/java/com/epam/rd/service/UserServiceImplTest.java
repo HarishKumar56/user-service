@@ -1,7 +1,6 @@
 package com.epam.rd.service;
 
-// TODO : getUser should return user by userName
-// TODO : getUser should throw exception if user not exist
+// TODO :
 // TODO : saveUser should save user
 // TODO : saveUser should throw exception if user already exist
 // TODO : updateUser should update user
@@ -11,6 +10,7 @@ package com.epam.rd.service;
 
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.repository.UserDao;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -21,8 +21,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,9 +44,17 @@ public class UserServiceImplTest {
     }
     @Test
     @DisplayName("getUser should return user by userName")
-    public void getUserShouldReturnUserByUserName(){
+    public void getUserShouldReturnUserByUserName() throws UserNotFoundException {
         User user = new User("","","");
         when(userDao.findById(anyString())).thenReturn(java.util.Optional.of(user));
-        Assertions.assertEquals(user, userService.getUser(""));
+        Assertions.assertEquals(user, userService.getUserByUserName(""));
+    }
+
+    @Test
+    @DisplayName("getUser should throw exception if user not exist")
+    public void getUserShouldThrowExceptionIfUserNotExist(){
+        User user = new User("","","");
+        when(userDao.findById(anyString())).thenReturn(java.util.Optional.ofNullable(null));
+        Assertions.assertThrows(UserNotFoundException.class , ()->userService.getUserByUserName(""));
     }
 }

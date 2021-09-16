@@ -1,6 +1,7 @@
 package com.epam.rd.service;
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userName) {
+    public User getUserByUserName(String userName) throws UserNotFoundException {
         Optional<User> user = userDao.findById(userName);
+        if(user.isEmpty()){
+            throw new UserNotFoundException("user with this username does not exist");
+        }
         return user.get();
     }
 }
