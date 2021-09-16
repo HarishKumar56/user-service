@@ -1,6 +1,5 @@
 package com.epam.rd.service;
 
-// TODO : getAllUsers should return all user
 // TODO : getUser should return user by userName
 // TODO : getUser should throw exception if user not exist
 // TODO : saveUser should save user
@@ -23,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,5 +39,12 @@ public class UserServiceImplTest {
         User user = new User("","","");
         when(userDao.findAll()).thenReturn(List.of(user,user));
         Assertions.assertEquals(List.of(user , user) , userService.getAllUsers());
+    }
+    @Test
+    @DisplayName("getUser should return user by userName")
+    public void getUserShouldReturnUserByUserName(){
+        User user = new User("","","");
+        when(userDao.findById(anyString())).thenReturn(java.util.Optional.of(user));
+        Assertions.assertEquals(user, userService.getUser(""));
     }
 }
