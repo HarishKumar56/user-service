@@ -43,8 +43,7 @@ public class UserServiceImplTest {
     @Test
     @DisplayName("getUser should throw exception if user not exist")
     public void getUserShouldThrowExceptionIfUserNotExist(){
-        User user = new User("","","");
-        when(userDao.findById(anyString())).thenReturn(java.util.Optional.ofNullable(null));
+        when(userDao.findById(anyString())).thenReturn(java.util.Optional.empty());
         Assertions.assertThrows(UserNotFoundException.class , ()->userService.getUserByUserName(""));
     }
 
@@ -66,14 +65,14 @@ public class UserServiceImplTest {
     @DisplayName("updateUser should throw exception if user not exist")
     public void updateUserShouldThrowExceptionIfUserNotExist(){
         User user = new User("","","");
-        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(null));
+        when(userDao.findById(anyString())).thenReturn(Optional.empty());
         Assertions.assertThrows(UserNotFoundException.class ,()->userService.updateUser(user.getUserName() ,user));
     }
     @Test
     @DisplayName("updateUser should update user")
     public void updateUserShouldUpdateUserIfExist(){
         User user = new User("","","");
-        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(user));
+        when(userDao.findById(anyString())).thenReturn(Optional.of(user));
         Assertions.assertDoesNotThrow(()->userService.updateUser(user.getUserName() ,user));
     }
 
@@ -81,7 +80,7 @@ public class UserServiceImplTest {
     @DisplayName("deleteUser should throw exception if user not exist")
     public void deleteUserShouldThrowExceptionIfUserNotExist(){
         User user = new User("","","");
-        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(null));
+        when(userDao.findById(anyString())).thenReturn(Optional.empty());
         Assertions.assertThrows(UserNotFoundException.class ,()->userService.deleteUser(user.getUserName()));
     }
 
@@ -89,7 +88,7 @@ public class UserServiceImplTest {
     @DisplayName("deleteUser should delete user")
     public void deleteUserShouldDeleteUserIfExist(){
         User user = new User("","","");
-        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(user));
+        when(userDao.findById(anyString())).thenReturn(Optional.of(user));
         Assertions.assertDoesNotThrow(()->userService.deleteUser(user.getUserName()));
     }
 
