@@ -81,4 +81,12 @@ public class UserServiceImplTest {
         Assertions.assertDoesNotThrow(()->userService.updateUser(user.getUserName() ,user));
     }
 
+    @Test
+    @DisplayName("deleteUser should throw exception if user not exist")
+    public void deleteUserShouldThrowExceptionIfUserNotExist(){
+        User user = new User("","","");
+        when(userDao.findById(anyString())).thenReturn(Optional.ofNullable(null));
+        Assertions.assertThrows(UserNotFoundException.class ,()->userService.deleteUser(user.getUserName()));
+    }
+
 }

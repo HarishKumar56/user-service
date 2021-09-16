@@ -14,4 +14,6 @@ public interface UserService {
      void saveUser(User user) throws DuplicateUserException;
 
      void updateUser(String userName, User user) throws UserNotFoundException;
+
+     void deleteUser(String userName) throws UserNotFoundException;
 }

@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
         user1.setPassword(user.getPassword());
         userDao.save(user1);
     }
+
+    @Override
+    public void deleteUser(String userName) throws UserNotFoundException {
+        User user = getUserByUserName(userName);
+
+    }
 }
