@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,5 +47,15 @@ public class UserControllerTest {
                         .get("/users/harish")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("getUserByUserName should not found status if user not exist")
+    public void getUserByUserNameShouldReturnNotFoundStatusIfUserNotExist() throws Exception {
+        doThrow(UserNotFoundException.class).when(userService).getUserByUserName(anyString());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/users/harish")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
