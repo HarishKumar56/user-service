@@ -1,6 +1,7 @@
 package com.epam.rd.controller;
 
 import com.epam.rd.entity.User;
+import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.service.UserService;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -29,10 +33,18 @@ public class UserControllerTest {
     @Test
     @DisplayName("getAllUsers should return all user with ok status")
     public void getAllUserShouldReturnAllUsersWithOkStatus() throws Exception {
-        User user = new User("","","");
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/users")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("getUser should return user by userName with Ok Status")
+    public void getUserShouldReturnUserByUserNameWithOkStatus() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/users/harish")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }
