@@ -1,12 +1,12 @@
 package com.epam.rd.controller;
 
+import com.epam.rd.dto.UserDto;
 import com.epam.rd.entity.User;
 import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -65,7 +61,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("saveUser should save user with ok status")
     public void saveUserShouldSaveUserWithOkStatus() throws Exception {
-        User user = new User("","","");
+        UserDto user = new UserDto("","","");
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/users")
                         .content(asJsonString(user))
@@ -76,7 +72,7 @@ public class UserControllerTest {
     @DisplayName("saveUser should conflict status if user already exist")
     public void saveUserShouldReturnConflictStatusIfUserAlreadyExist() throws Exception {
         doThrow(DuplicateUserException.class).when(userService).saveUser(any());
-        User user = new User("","","");
+        UserDto user = new UserDto("","","");
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/users")
                         .content(asJsonString(user))
@@ -88,7 +84,7 @@ public class UserControllerTest {
     @DisplayName("updateUser should throw exception if user not exist")
     public void updateUserShouldGiveNotFoundStatusIfUserNotExist() throws Exception {
         doThrow(UserNotFoundException.class).when(userService).updateUser(anyString() ,any());
-        User user = new User("","","");
+        UserDto user = new UserDto("","","");
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/users/harish")
                         .content(asJsonString(user))
@@ -99,7 +95,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("updateUser should update user and give ok status")
     public void updateUserShouldUpdateUserIfExistAndGiveOkStatus() throws Exception {
-        User user = new User("","","");
+        UserDto user = new UserDto("","","");
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/users/harish")
                         .content(asJsonString(user))

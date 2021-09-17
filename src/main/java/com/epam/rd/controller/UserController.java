@@ -1,6 +1,6 @@
 package com.epam.rd.controller;
 
-import com.epam.rd.entity.User;
+import com.epam.rd.dto.UserDto;
 import com.epam.rd.exception.DuplicateUserException;
 import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.service.UserService;
@@ -18,31 +18,31 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users")
-    public List<User> getAllUsers(){
+    public List<UserDto> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users/{userName}")
-    public User getUserByUserName(@PathVariable String userName) throws UserNotFoundException {
+    public UserDto getUserByUserName(@PathVariable String userName) throws UserNotFoundException {
         return userService.getUserByUserName(userName);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/users")
-    public void saveUser(@RequestBody User user) throws  DuplicateUserException {
-        userService.saveUser(user);
+    public void saveUser(@RequestBody UserDto userDto) throws  DuplicateUserException {
+        userService.saveUser(userDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/users/{userName}")
-    public void updateUser(@PathVariable String userName ,@RequestBody User user) throws DuplicateUserException, UserNotFoundException {
-        userService.updateUser(userName,user);
+    public void updateUser(@PathVariable String userName ,@RequestBody UserDto userDto) throws  UserNotFoundException {
+        userService.updateUser(userName,userDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/users/{userName}")
-    public void deleteUser(@PathVariable String userName) throws DuplicateUserException, UserNotFoundException {
+    public void deleteUser(@PathVariable String userName) throws  UserNotFoundException {
         userService.deleteUser(userName);
     }
 
