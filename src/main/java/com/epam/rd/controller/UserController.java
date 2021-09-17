@@ -40,6 +40,12 @@ public class UserController {
         userService.updateUser(userName,user);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/users/{userName}")
+    public void deleteUser(@PathVariable String userName) throws DuplicateUserException, UserNotFoundException {
+        userService.deleteUser(userName);
+    }
+
 
 
 

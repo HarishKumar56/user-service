@@ -107,6 +107,16 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("deleteUser should throw exception if user not exist")
+    public void deleteUserShouldNotFoundStatusIfUserNotExist() throws Exception {
+        doThrow(UserNotFoundException.class).when(userService).deleteUser(anyString());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/users/harish")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
