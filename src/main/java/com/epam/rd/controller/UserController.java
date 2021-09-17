@@ -34,6 +34,12 @@ public class UserController {
         userService.saveUser(user);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/users/{userName}")
+    public void updateUser(@PathVariable String userName ,@RequestBody User user) throws DuplicateUserException, UserNotFoundException {
+        userService.updateUser(userName,user);
+    }
+
 
 
 

@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -80,6 +82,18 @@ public class UserControllerTest {
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    @DisplayName("updateUser should throw exception if user not exist")
+    public void updateUserShouldGiveNotFoundStatusIfUserNotExist() throws Exception {
+        doThrow(UserNotFoundException.class).when(userService).updateUser(anyString() ,any());
+        User user = new User("","","");
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/users/harish")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     public static String asJsonString(final Object obj) {
