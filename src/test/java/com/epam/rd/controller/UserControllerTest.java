@@ -3,6 +3,7 @@ package com.epam.rd.controller;
 import com.epam.rd.entity.User;
 import com.epam.rd.exception.UserNotFoundException;
 import com.epam.rd.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -57,5 +58,25 @@ public class UserControllerTest {
                         .get("/users/harish")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("saveUser should save user with ok status")
+    public void saveUserShouldSaveUserWithOkStatus() throws Exception {
+        User user = new User("","","");
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/users")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
