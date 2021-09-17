@@ -96,6 +96,17 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("updateUser should update user and give ok status")
+    public void updateUserShouldUpdateUserIfExistAndGiveOkStatus() throws Exception {
+        User user = new User("","","");
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/users/harish")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
