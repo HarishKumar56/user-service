@@ -117,6 +117,15 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("deleteUser should delete user with ok status")
+    public void deleteUserShouldDeleteUserIfExistWithOkStatus() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/users/harish")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
